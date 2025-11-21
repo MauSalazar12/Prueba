@@ -1,6 +1,6 @@
 import axios from "axios";
 
-const API_BASE = "http://localhost:8080/api/ips";
+const API_BASE = "prueba-production-7db2.up.railway.app/api/ips;
 
 export const lookupIp = (ip) =>
   axios.post(`${API_BASE}/lookup`, { ip });
