@@ -2,7 +2,7 @@ import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import "leaflet/dist/leaflet.css";
 import L from "leaflet";
 
-// Fix para el ícono del marcador
+// Icono del marcador (Leaflet necesita esto manualmente)
 const icon = L.icon({
   iconUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-icon.png",
   shadowUrl: "https://unpkg.com/leaflet@1.9.4/dist/images/marker-shadow.png",
@@ -11,22 +11,34 @@ const icon = L.icon({
 });
 
 export default function MapView({ lat, lng, ip }) {
-  if (!lat || !lng) return <p>No hay coordenadas para mostrar en el mapa.</p>;
+  if (!lat || !lng) {
+    return <p>No hay coordenadas para mostrar el mapa.</p>;
+  }
 
   return (
     <MapContainer
       center={[lat, lng]}
-      zoom={10}
+      zoom={11}
       scrollWheelZoom={false}
-      style={{ height: "400px", width: "100%", marginTop: "20px" }}
+      style={{
+        width: "100%",
+        height: "400px",
+        marginTop: "28px",
+        borderRadius: "14px",
+        overflow: "hidden"
+      }}
     >
       <TileLayer
         url="https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png"
-        attribution="&copy; OpenStreetMap contributors"
+        attribution="&copy; OpenStreetMap Contributors"
       />
 
       <Marker position={[lat, lng]} icon={icon}>
-        <Popup>IP: {ip}</Popup>
+        <Popup>
+          <strong>IP:</strong> {ip} <br />
+          <strong>Lat:</strong> {lat} <br />
+          <strong>Lng:</strong> {lng}
+        </Popup>
       </Marker>
     </MapContainer>
   );

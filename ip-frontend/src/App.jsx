@@ -9,6 +9,7 @@ export default function App() {
   const [ips, setIps] = useState([]);
   const [selectedLocation, setSelectedLocation] = useState(null);
 
+  // Cargar datos al inicio
   useEffect(() => {
     loadData();
   }, []);
@@ -18,8 +19,11 @@ export default function App() {
     setIps(res.data);
   };
 
+  // Cuando se consulta una IP nueva
   const handleLookupSuccess = (newRecord) => {
     setIps((prev) => [newRecord, ...prev]);
+
+    // Seleccionar nueva IP en el mapa
     setSelectedLocation({
       lat: newRecord.latitude,
       lng: newRecord.longitude,
@@ -27,6 +31,7 @@ export default function App() {
     });
   };
 
+  // Cuando se hace clic a una fila de la tabla
   const handleSelectFromTable = (record) => {
     setSelectedLocation({
       lat: record.latitude,
@@ -35,17 +40,30 @@ export default function App() {
     });
   };
 
+  // Cuando se elimina un registro
+  const handleDelete = (id) => {
+    setIps((prev) => prev.filter((i) => i.id !== id));
+
+    // Limpiar mapa para evitar reselección automática
+    setSelectedLocation(null);
+  };
+
   return (
     <div className="container">
       <h1>Consulta de IPs</h1>
 
       <IpLookupForm
         onLookupSuccess={handleLookupSuccess}
-        onDuplicate={(r) => alert("Duplicada")}
+        onDuplicate={(record) => alert("La IP ya existe")}
       />
 
-      <IpTable data={ips} onRowClick={handleSelectFromTable} />
+      <IpTable 
+        data={ips}
+        onDelete={handleDelete}
+        onRowClick={handleSelectFromTable}
+      />
 
+      {/* Mostrar mapa solo si hay una IP seleccionada */}
       {selectedLocation && (
         <MapView
           lat={selectedLocation.lat}

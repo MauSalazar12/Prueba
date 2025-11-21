@@ -45,7 +45,7 @@ export default function IpTable({ data, onDelete, onRowClick }) {
   });
 
   // ------------------------------------
-  //             RENDER
+  //               RENDER
   // ------------------------------------
   return (
     <div>
@@ -66,7 +66,7 @@ export default function IpTable({ data, onDelete, onRowClick }) {
                 border: "1px solid #ccc",
                 padding: "4px 10px",
                 borderRadius: "4px",
-                cursor: "pointer",
+                cursor: "pointer"
               }}
             >
               {c}
@@ -86,7 +86,7 @@ export default function IpTable({ data, onDelete, onRowClick }) {
                 border: "1px solid #ccc",
                 padding: "4px 10px",
                 borderRadius: "4px",
-                cursor: "pointer",
+                cursor: "pointer"
               }}
             >
               {t}
@@ -106,7 +106,7 @@ export default function IpTable({ data, onDelete, onRowClick }) {
                 border: "1px solid #ccc",
                 padding: "4px 10px",
                 borderRadius: "4px",
-                cursor: "pointer",
+                cursor: "pointer"
               }}
             >
               {city}
@@ -123,7 +123,7 @@ export default function IpTable({ data, onDelete, onRowClick }) {
             color: "white",
             border: "none",
             cursor: "pointer",
-            borderRadius: "4px",
+            borderRadius: "4px"
           }}
         >
           Limpiar filtros
@@ -151,7 +151,9 @@ export default function IpTable({ data, onDelete, onRowClick }) {
         <tbody>
           {filtered.length === 0 && (
             <tr>
-              <td colSpan="8">No hay datos disponibles</td>
+              <td colSpan="8" style={{ textAlign: "center" }}>
+                No hay datos disponibles
+              </td>
             </tr>
           )}
 
@@ -172,10 +174,18 @@ export default function IpTable({ data, onDelete, onRowClick }) {
                 <button
                   className="delete"
                   onClick={(e) => {
-                    e.stopPropagation(); // evita que haga clic en el mapa
-                    onDelete(row.id);
+                    e.preventDefault(); // Evita comportamiento por defecto
+                    e.stopPropagation(); // Evita ejecutar el click del TR
+                    onDelete(row.id); // Elimina el registro
                   }}
-                  style={{ cursor: "pointer" }}
+                  style={{
+                    cursor: "pointer",
+                    background: "transparent",
+                    border: "1px solid #ff5c8a",
+                    padding: "4px 10px",
+                    borderRadius: "6px",
+                    color: "#ff5c8a"
+                  }}
                 >
                   ❌
                 </button>
